@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Caderno de contas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="topo">
+    <h1>Caderno de contas</h1>
+    <label class="mes">Mês
+      <input type="month" id="mes">
+    </label>
+  </header>
+
+  <section class="caderno" aria-label="Resumo do mês">
+    <div class="linha"><span class="titulo" id="mesTitulo">Saldo do mês</span><span></span></div>
+    <div class="linha saldo" id="saldo" aria-live="polite">R$ 0,00</div>
+    <div class="linha"><span>Receitas</span><span class="valor pos" id="receitas">R$ 0,00</span></div>
+    <div class="linha"><span>Despesas</span><span class="valor neg" id="despesas">R$ 0,00</span></div>
+  </section>
+
+  <div class="cols">
+    <div>
+      <section class="bloco" aria-labelledby="novo">
+        <h2 id="novo">Novo lançamento</h2>
+        <form id="form" novalidate>
+          <div class="seg" role="radiogroup" aria-label="Tipo">
+            <input type="radio" name="tipo" id="t-despesa" value="despesa" checked><label for="t-despesa">Despesa</label>
+            <input type="radio" name="tipo" id="t-receita" value="receita"><label for="t-receita">Receita</label>
+          </div>
+          <label class="campo"><span>Descrição</span><input type="text" id="desc" maxlength="60" placeholder="Ex.: almoço, passagem, site do cliente" autocomplete="off"></label>
+          <div class="duas">
+            <label class="campo"><span>Valor (R$)</span><input type="text" id="valor" inputmode="decimal" placeholder="0,00" autocomplete="off"></label>
+            <label class="campo"><span>Data</span><input type="date" id="data"></label>
+          </div>
+          <label class="campo"><span>Categoria</span><select id="cat"></select></label>
+          <p class="erro" id="erro" role="alert"></p>
+          <button class="btn" type="submit">Adicionar lançamento</button>
+        </form>
+      </section>
+
+      <section class="bloco" aria-labelledby="metaTitulo">
+        <h2 id="metaTitulo">Meta de gastos</h2>
+        <label class="campo"><span>Quanto você quer gastar, no máximo, por mês? (R$)</span><input type="text" id="meta" inputmode="decimal" placeholder="Ex.: 800" autocomplete="off"></label>
+        <div id="metaArea" hidden>
+          <div class="meta-barra" id="metaBarra"><i id="metaFill" style="width:0%"></i></div>
+          <p class="meta-txt" id="metaTxt"></p>
+        </div>
+      </section>
+
+      <section class="bloco">
+        <details>
+          <summary>Backup dos dados</summary>
+          <p class="nota">Seus dados ficam só neste navegador. Se limpar o histórico ou trocar de aparelho, eles somem. Gere um backup, copie o texto e guarde em um lugar seguro.</p>
+          <div class="botoes">
+            <button type="button" class="btn btn-sec" id="gerar">Gerar backup</button>
+            <button type="button" class="btn btn-sec" id="restaurar">Restaurar do texto</button>
+          </div>
+          <textarea id="backup" aria-label="Texto do backup" spellcheck="false" placeholder="O backup aparece aqui. Para restaurar, cole o texto aqui e toque em Restaurar."></textarea>
+          <p class="nota" id="backupMsg" role="status"></p>
+        </details>
+      </section>
+    </div>
+
+    <div>
+      <section class="bloco" aria-labelledby="catTitulo">
+        <h2 id="catTitulo">Para onde foi o dinheiro</h2>
+        <ul class="cats" id="cats"></ul>
+        <p class="vazio" id="catsVazio">Sem despesas neste mês.</p>
+      </section>
+
+      <section class="bloco" aria-labelledby="listaTitulo">
+        <h2 id="listaTitulo">Lançamentos</h2>
+        <ul class="lista" id="lista"></ul>
+        <p class="vazio" id="listaVazia">Nenhum lançamento neste mês. Adicione o primeiro no formulário.</p>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" hidden><span id="toastTxt"></span><button type="button" id="toastBtn">Desfazer</button></div>
+
+<script src="script.js"></script>
+</body>
+</html>
